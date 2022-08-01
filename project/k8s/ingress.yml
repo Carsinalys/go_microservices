@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: my-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: front-end.info
@@ -15,7 +15,7 @@ spec:
               service:
                 name: front-end
                 port:
-                  number: 80
+                  number: 8080
     - host: broker-service.info
       http:
         paths:
@@ -25,5 +25,5 @@ spec:
               service:
                 name: broker-service
                 port:
-                  number: 80
+                  number: 8081
 

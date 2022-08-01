@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/rpc"
 	"time"
@@ -45,6 +46,7 @@ type LogPayload struct {
 
 // Broker is a test handler, just to make sure we can hit the broker from a web client
 func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(" --- hit / path --- ")
 	payload := jsonResponse{
 		Error:   false,
 		Message: "Hit the broker",
@@ -66,10 +68,13 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 
 	switch requestPayload.Action {
 	case "auth":
+		fmt.Println(" --- hit /handle?auth path --- ")
 		app.authenticate(w, requestPayload.Auth)
 	case "log":
+		fmt.Println(" --- hit /handle?log path --- ")
 		app.logItemViaRPC(w, requestPayload.Log)
 	case "mail":
+		fmt.Println(" --- hit /handle?mail path --- ")
 		app.sendMail(w, requestPayload.Mail)
 	default:
 		app.errorJSON(w, errors.New("unknown action"))
@@ -276,6 +281,7 @@ func (app *Config) logItemViaRPC(w http.ResponseWriter, l LogPayload) {
 }
 
 func (app *Config) LogViaGRPC(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(" --- hit /log-grpc path --- ")
 	var requestPayload RequestPayload
 
 	err := app.readJSON(w, r, &requestPayload)
@@ -296,7 +302,7 @@ func (app *Config) LogViaGRPC(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	_, err = c.WriteLog(ctx, &logs.LogRequest{
-		LogEntry: &logs.Log {
+		LogEntry: &logs.Log{
 			Name: requestPayload.Log.Name,
 			Data: requestPayload.Log.Data,
 		},

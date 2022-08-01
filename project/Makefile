@@ -19,6 +19,25 @@ up_build: build_broker build_auth build_logger build_mail build_listener build_f
 	docker-compose up --build -d
 	@echo "Docker images built and started!"
 
+## build: build all binaries
+build: build_broker build_auth build_logger build_mail build_listener build_front
+
+## kube_start: start kubernetes
+kube_start:
+	kubectl apply -f k8s
+
+## kube_stop: stop kubernetes
+kube_stop:
+	kubectl delete -f k8s
+
+## start_db: start postgres db container
+start_db:
+	docker-compose -f postgres.yml up -d
+
+## stop_db: stop postgres db container
+stop_db:
+	docker-compose -f postgres.yml stop
+
 ## down: stop docker compose
 down:
 	@echo "Stopping docker compose..."

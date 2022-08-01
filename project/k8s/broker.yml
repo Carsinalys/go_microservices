@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: broker-service
-        image: "cardinalys/broker-service:1.0.6"
+        image: "cardinalys/broker-service:1.0.8"
         resources:
           requests:
             memory: "64Mi"
@@ -26,7 +26,7 @@ spec:
           - name: RABBITMQ_URL
             value: "amqp://guest:guest@rabbitmq"
         ports:
-          - containerPort: 80
+          - containerPort: 8081
 
 ---
 
@@ -40,5 +40,5 @@ spec:
   ports:
     - protocol: TCP
       name: main-port
-      port: 80
-      targetPort: 80
+      port: 8081
+      targetPort: 8081

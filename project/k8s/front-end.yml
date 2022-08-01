@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: front-end
-        image: "cardinalys/front-end:1.0.2"
+        image: "cardinalys/front-end:1.0.4"
         resources:
           requests:
             memory: "64Mi"
@@ -26,7 +26,7 @@ spec:
           - name: BROKER_URL
             value: "http://broker-service.info"
         ports:
-          - containerPort: 80
+          - containerPort: 8080
 
 ---
 
@@ -40,5 +40,7 @@ spec:
   ports:
     - protocol: TCP
       name: main-port
-      port: 80
-      targetPort: 80
+      # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 8080
