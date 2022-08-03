@@ -5,6 +5,10 @@ LOGGER_BINARY=loggerServiceApp
 MAIL_BINARY=mailerApp
 LISTENER_BINARY=listenerApp
 
+# start minikube with two nodes
+# minikube start --nodes 2 -p multinode-demo
+# minikube start --network-plugin=cni --cni=calico
+
 ## up: starts all containers in the background without forcing build
 up:
 	@echo "Starting Docker images..."
